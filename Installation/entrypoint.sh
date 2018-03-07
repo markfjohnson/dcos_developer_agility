@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -x
 set echo on
+echo "At start of entrypoint file.sh"
+
 init_global_variables () {
   # For coloring console output
   BLUE='\033[1;34m'
@@ -333,17 +335,23 @@ responsible_shutdown() {
 
 set -e
 set +o posix
-
+set -x
+set echo on
 # setup handlers
 # on callback, kill the last background process, which is `tail -f /dev/null` and execute the specified handler
 trap 'responsible_shutdown' SIGHUP SIGTERM SIGINT
 
+echo "Starting the entry point"
 init
+echo "Passed init"
 init_global_variables
+echo "passed global variables"
 set_environment_variables
+echo "passed set env var"
 
 # run che
 start_che_server &
+echo "started che server"
 
 PID=$!
 
