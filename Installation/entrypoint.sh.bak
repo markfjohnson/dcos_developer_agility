@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -x
-set echo on
 init_global_variables () {
   # For coloring console output
   BLUE='\033[1;34m'
@@ -53,8 +52,7 @@ Variables:
 
   DEFAULT_CHE_DEBUG_SERVER=false
   CHE_DEBUG_SERVER=${CHE_DEBUG_SERVER:-${DEFAULT_CHE_DEBUG_SERVER}}
-    echo "Initializewd variables"
-    env | sort
+
 }
 
 error () {
@@ -109,7 +107,6 @@ docker_exec() {
 }
 
 start_che_server () {
- echo "starting CHE server"
  if ${CHE_LAUNCH_DOCKER_REGISTRY} ; then
     # Export the value of host here
     launch_docker_registry
@@ -127,7 +124,6 @@ stop_che_server () {
 }
 
 call_catalina () {
-  echo "Start catalina"
   # Test to see that Che application server is where we expect it to be
   if [ ! -d "${ASSEMBLY_BIN_DIR}" ]; then
     error "Could not find Che's application server."
@@ -145,7 +141,7 @@ call_catalina () {
   ### We do the port mapping here, and this gets inserted into server.xml when tomcat boots
   export JAVA_OPTS="${JAVA_OPTS} -Dport.http=${CHE_PORT} -Dche.home=${CHE_HOME}"
   export SERVER_PORT=${CHE_PORT}
-  echo "Before catalina call"
+
   # Launch the Che application server, passing in command line parameters
   if [[ "${CHE_DEBUG_SERVER}" == true ]]; then
     "${ASSEMBLY_BIN_DIR}"/catalina.sh jpda ${CHE_SERVER_ACTION}
