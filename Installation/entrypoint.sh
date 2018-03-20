@@ -262,6 +262,9 @@ init() {
   # Move files from /lib to /lib-copy.  This puts files onto the host.
   rm -rf ${CHE_DATA}/lib/*
   mkdir -p ${CHE_DATA}/lib
+  ### XXXX
+  ls -lat ${CHE_HOME}/lib/*
+  ### XXXX
   cp -rf ${CHE_HOME}/lib/* "${CHE_DATA}"/lib
 
   # Cleanup no longer in use stacks folder, accordance to a new loading policy.
