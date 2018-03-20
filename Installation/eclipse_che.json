@@ -1,0 +1,67 @@
+{
+  "labels": {
+    "HAPROXY_GROUP": "external"
+  },
+  "id": "/eclipse-che",
+  "backoffFactor": 1.15,
+  "backoffSeconds": 1,
+  "cmd": "env|sort && ls -lt && pwd",
+  "container": {
+    "type": "DOCKER",
+    "volumes": [
+      {
+        "containerPath": "/var/run/docker.sock",
+        "hostPath": "/var/run/docker.sock",
+        "mode": "RW"
+      },
+      {
+        "containerPath": "/data",
+        "hostPath": "/tmp",
+        "mode": "RW"
+      }
+    ],
+    "docker": {
+      "image": "eclipse/che:latest",
+      "forcePullImage": false,
+      "privileged": false,
+      "parameters": []
+    }
+  },
+  "cpus": 1,
+  "disk": 0,
+  "env": {
+    "CHE_SERVER_ACTION": "start",
+    "CHE_LOG_LEVEL": "DEBUG",
+    "CHE_IP": "localhost"
+  },
+  "fetch": [
+    {
+      "uri": "https://raw.githubusercontent.com/markfjohnson/dcos_developer_agility/master/Installation/entrypoint.sh",
+      "extract": true,
+      "executable": false,
+      "cache": false
+    }
+  ],
+  "instances": 1,
+  "maxLaunchDelaySeconds": 3600,
+  "mem": 1024,
+  "gpus": 0,
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "portDefinitions": [],
+  "requirePorts": false,
+  "upgradeStrategy": {
+    "maximumOverCapacity": 1,
+    "minimumHealthCapacity": 1
+  },
+  "killSelection": "YOUNGEST_FIRST",
+  "unreachableStrategy": {
+    "inactiveAfterSeconds": 0,
+    "expungeAfterSeconds": 0
+  },
+  "healthChecks": [],
+  "constraints": []
+}
